@@ -18,36 +18,14 @@ document
 
 async function loadIssues(){
 
+console.log("loading issues");
+
 const result =
 await supabaseClient
 .from("issues")
 .select("*");
 
 console.log(result);
-
-const issueBox =
-document.getElementById("issues");
-
-issueBox.innerHTML = "";
-
-if(!Array.isArray(result.data)){
-    console.log("DATA NOT ARRAY");
-    console.log(result.data);
-    console.log(result.error);
-    return;
-}
-
-result.data.forEach(issue => {
-
-const option =
-document.createElement("option");
-
-option.value = issue.id;
-option.textContent = issue.name;
-
-issueBox.appendChild(option);
-
-});
 
 }
 
