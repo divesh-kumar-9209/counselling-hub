@@ -217,6 +217,8 @@ alert("Case Saved");
 
 }
 
+async function selectedResources(){
+
 const selectedResources =
 Array.from(
 document.getElementById("resources")
@@ -232,4 +234,5 @@ case_id: caseId,
 resource_id: resourceId
 }]);
 
+}
 }
