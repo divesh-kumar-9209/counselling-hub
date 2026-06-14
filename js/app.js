@@ -16,13 +16,21 @@ document
 
 });
 
-async function loadIssues(){
+async function loadIssues() {
 
-const { data } =
-await supabaseClient
+const result = await supabaseClient
 .from("issues")
 .select("*")
 .order("name");
+
+console.log("issues result", result);
+
+if(result.error){
+    console.error(result.error);
+    return;
+}
+
+const data = result.data;
 
 const issueBox =
 document.getElementById("issues");
