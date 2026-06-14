@@ -1,3 +1,5 @@
+console.log("app.js loaded");
+
 let selectedIssues = [];
 let selectedSubIssues = [];
 
@@ -30,7 +32,7 @@ console.log(result);
 }
 
 async function loadResources(){
-
+console.log("loading resources");
 const { data } =
 await supabaseClient
 .from("resources")
@@ -214,3 +216,6 @@ resource_id: resourceId
 
 }
 }
+
+console.log("app.js loaded");
+console.log("loading issues");
