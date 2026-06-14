@@ -576,10 +576,6 @@ const { data, error } =
 await supabaseClient
 .from("resources")
 .select("*")
-.eq(
-"category",
-categoryId
-)
 .order("title");
 
 if(error){
