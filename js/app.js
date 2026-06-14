@@ -208,3 +208,20 @@ sub_issue_id: subIssueId
 alert("Case Saved");
 
 }
+
+const selectedResources =
+Array.from(
+document.getElementById("resources")
+.selectedOptions
+).map(x => Number(x.value));
+
+for(const resourceId of selectedResources){
+
+await supabaseClient
+.from("case_resources")
+.insert([{
+case_id: caseId,
+resource_id: resourceId
+}]);
+
+}

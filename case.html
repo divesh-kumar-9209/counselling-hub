@@ -9,100 +9,147 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="js/supabase.js"></script>
 </head>
-
 <body>
-
+    
 <div class="container">
 
 <h1>Counselling Hub</h1>
 
 <div class="card">
 
-<h2>Client Information</h2>
+<div class="section-title">
+Client Information
+</div>
 
-<input id="clientName" placeholder="Client Name">
+<div class="grid">
 
-<input id="age" type="number" placeholder="Age">
+<div class="form-group">
+<label>Client Name</label>
+<input id="clientName">
+</div>
 
+<div class="form-group">
+<label>Age</label>
+<input id="age" type="number">
+</div>
+
+<div class="form-group">
+<label>Gender</label>
 <select id="gender">
 <option value="">Select Gender</option>
 <option>Male</option>
 <option>Female</option>
 <option>Other</option>
 </select>
+</div>
 
+<div class="form-group">
+<label>Session Date</label>
 <input id="sessionDate" type="date">
+</div>
 
+<div class="form-group">
+<label>Session Duration</label>
 <select id="sessionDuration">
-<option value="">Session Duration</option>
+<option value="">Select</option>
 <option>15</option>
 <option>30</option>
 <option>45</option>
 <option>60</option>
 <option>90</option>
 </select>
+</div>
+
+</div>
 
 </div>
 
 <div class="card">
 
-<h2>Main Issues</h2>
+<div class="section-title">
+Issues & Resources
+</div>
 
+<div class="grid">
+
+<div class="form-group">
+<label>Main Issues</label>
 <select id="issues" multiple></select>
-
 </div>
 
-<div class="card">
-
-<h2>Sub Issues</h2>
-
+<div class="form-group">
+<label>Sub Issues</label>
 <select id="subIssues" multiple></select>
-
 </div>
 
-<div class="card">
-
-<h2>Knowledge Base</h2>
-
+<div class="form-group">
+<label>Knowledge Base</label>
 <select id="resources" multiple></select>
+</div>
+
+</div>
 
 </div>
 
 <div class="card">
 
-<h2>Support Offered</h2>
+<div class="section-title">
+Support & Outcome
+</div>
 
+<div class="grid-2">
+
+<div class="form-group">
+<label>Support Offered</label>
 <textarea id="supportOffered"></textarea>
+</div>
 
-<h2>Concluding Problems</h2>
-
+<div class="form-group">
+<label>Concluding Problems</label>
 <textarea id="concludingProblems"></textarea>
+</div>
+
+</div>
 
 </div>
 
 <div class="card">
 
-<h2>Issue Remarks</h2>
+<div class="section-title">
+Remarks
+</div>
 
+<div class="grid-2">
+
+<div class="form-group">
+<label>Issue Remarks</label>
 <textarea id="issueRemarks"></textarea>
+</div>
 
-<h2>Resource Remarks</h2>
-
+<div class="form-group">
+<label>Resource Remarks</label>
 <textarea id="resourceRemarks"></textarea>
+</div>
 
-<h2>Counsellor Remarks</h2>
-
+<div class="form-group">
+<label>Counsellor Remarks</label>
 <textarea id="counsellorRemarks"></textarea>
+</div>
 
-<h2>General Remarks</h2>
-
+<div class="form-group">
+<label>General Remarks</label>
 <textarea id="generalRemarks"></textarea>
+</div>
+
+</div>
 
 </div>
 
 <div class="card">
 
-<h2>Conclusion Of Case</h2>
+<div class="section-title">
+Case Summary
+</div>
 
 <textarea id="caseSummary"></textarea>
 
@@ -110,28 +157,49 @@
 
 <div class="card">
 
+<div class="section-title">
+Follow Up
+</div>
+
+<div class="grid">
+
+<div>
 <label>
 <input type="checkbox" id="followUpRequired">
-Follow Up Required
+ Follow Up Required
 </label>
+</div>
 
-<input type="date" id="followUpDate">
+<div>
+<label>Follow Up Date</label>
+<input id="followUpDate" type="date">
+</div>
 
+<div>
+<label>Status</label>
 <select id="caseStatus">
 <option>Open</option>
 <option>Closed</option>
 <option>Follow Up</option>
 </select>
+</div>
 
 </div>
+
+</div>
+
+<div class="actions">
 
 <button id="saveBtn">
 Save Case
 </button>
 
+<button onclick="window.print()">
+Print
+</button>
+
 </div>
 
-<script src="js/app.js"></script>
-
+</div>
 </body>
 </html>
