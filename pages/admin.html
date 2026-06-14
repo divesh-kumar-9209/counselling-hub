@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta charset="UTF-8">
+
+<title>Admin Panel</title>
+
+<link rel="stylesheet" href="css/styles.css">
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase.js"></script>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Admin Panel</h1>
+
+<h2>Add Main Issue</h2>
+
+<input id="issueName" placeholder="Issue Name">
+
+<button onclick="addIssue()">
+Save Issue
+</button>
+
+<hr>
+
+<h2>Add Sub Issue</h2>
+
+<select id="issueSelect"></select>
+
+<input id="subIssueName" placeholder="Sub Issue">
+
+<button onclick="addSubIssue()">
+Save Sub Issue
+</button>
+
+<hr>
+
+<h2>Add Knowledge Category</h2>
+
+<input id="categoryName" placeholder="Category Name">
+
+<button onclick="addCategory()">
+Save Category
+</button>
+
+<hr>
+
+<h2>Add Resource</h2>
+
+<input id="resourceTitle" placeholder="Resource Title">
+
+<button onclick="addResource()">
+Save Resource
+</button>
+
+</div>
+
+<script src="js/admin.js"></script>
+
+</body>
+
+</html>
