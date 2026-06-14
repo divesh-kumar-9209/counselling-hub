@@ -2,21 +2,387 @@ console.log("app.js loaded");
 
 let selectedIssues = [];
 let selectedSubIssues = [];
+let selectedResources = [];
+document.addEventListener(
+"DOMContentLoaded",
+async () => {
 
-document.addEventListener("DOMContentLoaded", async () => {
-
+await loadCategories();
 await loadIssues();
-await loadResources();
+await loadCategories();
+
+
+document
+.getElementById("addIssueBtn")
+.addEventListener(
+"click",
+addIssue
+);
+
+document
+.getElementById("addSubIssueBtn")
+.addEventListener(
+"click",
+addSubIssue
+);
+
+document
+.getElementById("addResourceBtn")
+.addEventListener(
+"click",
+addResource
+);
 
 document
 .getElementById("issues")
-.addEventListener("change", issueChanged);
+.addEventListener(
+"change",
+issueChanged
+);
 
 document
 .getElementById("saveBtn")
-.addEventListener("click", saveCase);
+.addEventListener(
+"click",
+saveCase
+);
+
+document
+.getElementById("phrasesBtn")
+.addEventListener(
+"click",
+openPhrases
+);
+
+document
+.getElementById("closePhrases")
+.addEventListener(
+"click",
+closePhrases
+);
+
+document
+.getElementById("supportCategory")
+.addEventListener(
+"change",
+categoryChanged
+);
 
 });
+
+function addIssue(){
+
+const select =
+document.getElementById(
+"issues"
+);
+
+const id =
+Number(select.value);
+
+const text =
+select.options[
+select.selectedIndex
+].text;
+
+if(
+selectedIssues.some(
+x => x.id === id
+)
+){
+return;
+}
+
+selectedIssues.push({
+id,
+text
+});
+
+renderIssues();
+
+}
+
+function renderIssues(){
+
+const box =
+document.getElementById(
+"selectedIssues"
+);
+
+box.innerHTML = "";
+
+selectedIssues.forEach(
+issue => {
+
+const chip =
+document.createElement(
+"div"
+);
+
+chip.className =
+"chip";
+
+chip.innerHTML = `
+
+${issue.text}
+
+<button
+type="button"
+onclick="removeIssue(${issue.id})">
+×
+</button>
+
+`;
+
+box.appendChild(
+chip
+);
+
+});
+
+}
+
+function removeIssue(id){
+
+selectedIssues =
+selectedIssues.filter(
+x => x.id !== id
+);
+
+renderIssues();
+
+}
+
+function removeIssue(id){
+
+selectedIssues =
+selectedIssues.filter(
+x => x.id !== id
+);
+
+renderIssues();
+
+}
+
+function addSubIssue(){
+
+const select =
+document.getElementById(
+"subIssues"
+);
+
+const id =
+Number(select.value);
+
+const text =
+select.options[
+select.selectedIndex
+].text;
+
+if(
+selectedSubIssues.some(
+x => x.id === id
+)
+){
+return;
+}
+
+selectedSubIssues.push({
+id,
+text
+});
+
+renderSubIssues();
+
+}
+
+function renderSubIssues(){
+
+const box =
+document.getElementById(
+"selectedSubIssues"
+);
+
+box.innerHTML = "";
+
+selectedSubIssues.forEach(
+item => {
+
+const chip =
+document.createElement(
+"div"
+);
+
+chip.className =
+"chip";
+
+chip.innerHTML = `
+
+${item.text}
+
+<button
+type="button"
+onclick="removeSubIssue(${item.id})">
+×
+</button>
+
+`;
+
+box.appendChild(
+chip
+);
+
+});
+
+}
+
+function removeSubIssue(id){
+
+selectedSubIssues =
+selectedSubIssues.filter(
+x => x.id !== id
+);
+
+renderSubIssues();
+
+}
+
+function addResource(){
+
+const select =
+document.getElementById(
+"resources"
+);
+
+const id =
+Number(select.value);
+
+const text =
+select.options[
+select.selectedIndex
+].text;
+
+if(
+selectedResources.some(
+x => x.id === id
+)
+){
+return;
+}
+
+selectedResources.push({
+id,
+text
+});
+
+renderResources();
+
+}
+
+function renderResources(){
+
+const box =
+document.getElementById(
+"selectedResources"
+);
+
+box.innerHTML = "";
+
+selectedResources.forEach(
+item => {
+
+const chip =
+document.createElement(
+"div"
+);
+
+chip.className =
+"chip";
+
+chip.innerHTML = `
+
+${item.text}
+
+<button
+type="button"
+onclick="removeResource(${item.id})">
+×
+</button>
+
+`;
+
+box.appendChild(
+chip
+);
+
+});
+
+}
+
+function renderResources(){
+
+const box =
+document.getElementById(
+"selectedResources"
+);
+
+box.innerHTML = "";
+
+selectedResources.forEach(
+item => {
+
+const chip =
+document.createElement(
+"div"
+);
+
+chip.className =
+"chip";
+
+chip.innerHTML = `
+
+${item.text}
+
+<button
+type="button"
+onclick="removeResource(${item.id})">
+×
+</button>
+
+`;
+
+box.appendChild(
+chip
+);
+
+});
+
+}
+
+function openPhrases(){
+
+document
+.getElementById(
+"phrasesDrawer"
+)
+.classList.add(
+"open"
+);
+
+}
+
+function closePhrases(){
+
+document
+.getElementById(
+"phrasesDrawer"
+)
+.classList.remove(
+"open"
+);
+
+}
+
 
 async function loadIssues(){
 
@@ -81,45 +447,6 @@ box.appendChild(option);
 
 }
 
-async function issueChanged(){
-
-const issueSelect =
-document.getElementById("issues");
-
-const issueIds =
-Array.from(issueSelect.selectedOptions)
-.map(x => Number(x.value));
-
-selectedIssues = issueIds;
-
-const subBox =
-document.getElementById("subIssues");
-
-subBox.innerHTML = "";
-
-for(const issueId of issueIds){
-
-const { data } =
-await supabaseClient
-.from("sub_issues")
-.select("*")
-.eq("issue_id", issueId);
-
-data.forEach(sub => {
-
-const option =
-document.createElement("option");
-
-option.value = sub.id;
-option.textContent = sub.name;
-
-subBox.appendChild(option);
-
-});
-
-}
-
-}
 
 async function saveCase(){
 
@@ -188,57 +515,93 @@ return;
 
 const caseId = caseRow.id;
 
-for(const issueId of selectedIssues){
+for(const issue of selectedIssues){
 
 await supabaseClient
 .from("case_issues")
 .insert([{
 case_id: caseId,
-issue_id: issueId
+issue_id: issue.id
 }]);
 
 }
+}
 
-const selectedSubIssueIds =
-Array.from(
-document.getElementById("subIssues")
-.selectedOptions
-).map(x => Number(x.value));
-
-for(const subIssueId of selectedSubIssueIds){
+for(const subIssue of selectedSubIssues){
 
 await supabaseClient
 .from("case_sub_issues")
 .insert([{
 case_id: caseId,
-sub_issue_id: subIssueId
+sub_issue_id: subIssue.id
 }]);
 
 }
 
-alert("Case Saved");
 
-}
 
-async function selectedResources(){
+async function loadCategories(){
 
-const selectedResources =
-Array.from(
-document.getElementById("resources")
-.selectedOptions
-).map(x => Number(x.value));
-
-for(const resourceId of selectedResources){
-
+const { data } =
 await supabaseClient
-.from("case_resources")
-.insert([{
-case_id: caseId,
-resource_id: resourceId
-}]);
+.from("knowledge_categories")
+.select("*")
+.order("name");
+
+const select =
+document.getElementById(
+"supportCategory"
+);
+
+select.innerHTML =
+'<option value="">Select Category</option>';
+
+data.forEach(cat=>{
+
+const option =
+document.createElement("option");
+
+option.value = cat.id;
+option.textContent = cat.name;
+
+select.appendChild(option);
+
+});
 
 }
-}
 
-console.log("app.js loaded");
-console.log("loading issues");
+
+async function categoryChanged(){
+
+const category =
+document.getElementById(
+"supportCategory"
+).value;
+
+const { data } =
+await supabaseClient
+.from("resources")
+.select("*")
+.eq("category", category)
+.order("title");
+
+const box =
+document.getElementById(
+"resources"
+);
+
+box.innerHTML = "";
+
+data.forEach(resource=>{
+
+const option =
+document.createElement("option");
+
+option.value = resource.id;
+option.textContent = resource.title;
+
+box.appendChild(option);
+
+});
+
+}

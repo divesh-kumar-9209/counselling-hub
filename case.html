@@ -1,206 +1,776 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<meta charset="UTF-8">
-<title>Counselling Hub</title>
+    <meta charset="UTF-8">
+    <title>Counselling Hub</title>
 
-<link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/styles.css">
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="js/supabase.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase.js"></script>
+    <script defer src="js/app.js"></script>
 </head>
-<script src="js/app.js"></script>
+
 <body>
-    
-<div class="container">
 
-<h1>Counselling Hub</h1>
+    <div class="container">
 
-<div class="card">
+        <h1>Counselling Hub</h1>
 
-<div class="section-title">
-Client Information
-</div>
+        <!-- CALL OPENING -->
 
-<div class="grid">
+        <div class="card">
 
-<div class="form-group">
-<label>Client Name</label>
-<input id="clientName">
-</div>
+            <div class="section-title">
+                Call Opening
+            </div>
 
-<div class="form-group">
-<label>Age</label>
-<input id="age" type="number">
-</div>
+            <textarea id="callOpening" placeholder="Enter opening used during call"></textarea>
 
-<div class="form-group">
-<label>Gender</label>
-<select id="gender">
-<option value="">Select Gender</option>
-<option>Male</option>
-<option>Female</option>
-<option>Other</option>
-</select>
-</div>
+        </div>
 
-<div class="form-group">
-<label>Session Date</label>
-<input id="sessionDate" type="date">
-</div>
+        <!-- MENTIONS -->
 
-<div class="form-group">
-<label>Session Duration</label>
-<select id="sessionDuration">
-<option value="">Select</option>
-<option>15</option>
-<option>30</option>
-<option>45</option>
-<option>60</option>
-<option>90</option>
-</select>
-</div>
+        <div class="card">
 
-</div>
+            <div class="section-title">
+                Mentions
+            </div>
 
-</div>
+            <textarea id="mentions" placeholder="Important mentions before session"></textarea>
 
-<div class="card">
+        </div>
 
-<div class="section-title">
-Issues & Resources
-</div>
+        <!-- CLIENT INFO -->
 
-<div class="grid">
+        <div class="card">
 
-<div class="form-group">
-<label>Main Issues</label>
-<select id="issues" multiple></select>
-</div>
+            <div class="section-title">
+                Client Information
+            </div>
 
-<div class="form-group">
-<label>Sub Issues</label>
-<select id="subIssues" multiple></select>
-</div>
+            <div class="grid">
 
-<div class="form-group">
-<label>Knowledge Base</label>
-<select id="resources" multiple></select>
-</div>
+                <div class="form-group">
+                    <label>Client Name</label>
+                    <input id="clientName">
+                </div>
 
-</div>
+                <div class="form-group">
+                    <label>Age</label>
+                    <input id="age" type="number">
+                </div>
 
-</div>
+                <div class="form-group">
+                    <label>Gender</label>
+                    <select id="gender">
+                        <option value="">Select Gender</option>
+                        <option>Male</option>
+                        <option>Female</option>
+                        <option>Other</option>
+                    </select>
+                </div>
 
-<div class="card">
+                <div class="form-group">
+                    <label>Occupation</label>
+                    <input id="occupation">
+                </div>
 
-<div class="section-title">
-Support & Outcome
-</div>
+                <div class="form-group">
+                    <label>Session Date</label>
+                    <input id="sessionDate" type="date">
+                </div>
 
-<div class="grid-2">
+                <div class="form-group">
+                    <label>Session Duration</label>
+                    <select id="sessionDuration">
+                        <option value="">Select</option>
+                        <option>15</option>
+                        <option>30</option>
+                        <option>45</option>
+                        <option>60</option>
+                        <option>90</option>
+                    </select>
+                </div>
 
-<div class="form-group">
-<label>Support Offered</label>
-<textarea id="supportOffered"></textarea>
-</div>
+            </div>
 
-<div class="form-group">
-<label>Concluding Problems</label>
-<textarea id="concludingProblems"></textarea>
-</div>
+        </div>
 
-</div>
+        <!-- SUPPORT SYSTEM -->
 
-</div>
+        <div class="card">
 
-<div class="card">
+            <div class="section-title">
+                Support System
+            </div>
 
-<div class="section-title">
-Remarks
-</div>
+            <div class="grid">
 
-<div class="grid-2">
+                <div class="form-group">
+                    <label>Available?</label>
+                    <select id="supportSystem">
+                        <option value="">Select</option>
+                        <option>Yes</option>
+                        <option>No</option>
+                    </select>
+                </div>
 
-<div class="form-group">
-<label>Issue Remarks</label>
-<textarea id="issueRemarks"></textarea>
-</div>
+                <div class="form-group">
+                    <label>Who</label>
+                    <input id="supportWho">
+                </div>
 
-<div class="form-group">
-<label>Resource Remarks</label>
-<textarea id="resourceRemarks"></textarea>
-</div>
+                <div class="form-group">
+                    <label>Whom Shared</label>
+                    <input id="supportShared">
+                </div>
 
-<div class="form-group">
-<label>Counsellor Remarks</label>
-<textarea id="counsellorRemarks"></textarea>
-</div>
+                <div class="form-group">
+                    <label>Friends</label>
+                    <input id="supportFriends">
+                </div>
 
-<div class="form-group">
-<label>General Remarks</label>
-<textarea id="generalRemarks"></textarea>
-</div>
+            </div>
 
-</div>
+        </div>
 
-</div>
+        <!-- RELATIONSHIP PROBLEM -->
 
-<div class="card">
+        <div class="card">
 
-<div class="section-title">
-Case Summary
-</div>
+            <div class="section-title">
+                Relationship Problem
+            </div>
 
-<textarea id="caseSummary"></textarea>
+            <div class="grid">
 
-</div>
+                <div class="form-group">
+                    <label>Present?</label>
+                    <select id="relationshipProblem">
+                        <option value="">Select</option>
+                        <option>Yes</option>
+                        <option>No</option>
+                    </select>
+                </div>
 
-<div class="card">
+                <div class="form-group">
+                    <label>Status</label>
+                    <select id="relationshipStatus">
+                        <option value="">Select</option>
+                        <option>Single</option>
+                        <option>Committed</option>
+                        <option>Separated</option>
+                    </select>
+                </div>
 
-<div class="section-title">
-Follow Up
-</div>
+                <div class="form-group">
+                    <label>Condition</label>
+                    <select id="relationshipCondition">
+                        <option value="">Select</option>
+                        <option>Healthy</option>
+                        <option>Unhealthy</option>
+                    </select>
+                </div>
 
-<div class="grid">
+                <div class="form-group">
+                    <label>Start Date</label>
+                    <input id="relationshipStartDate" type="date">
+                </div>
 
-<div>
-<label>
-<input type="checkbox" id="followUpRequired">
- Follow Up Required
-</label>
-</div>
+                <div class="form-group">
+                    <label>End Date</label>
+                    <input id="relationshipEndDate" type="date">
+                </div>
 
-<div>
-<label>Follow Up Date</label>
-<input id="followUpDate" type="date">
-</div>
+                <div class="form-group">
+                    <label>Issues</label>
+                    <input id="relationshipIssues">
+                </div>
 
-<div>
-<label>Status</label>
-<select id="caseStatus">
-<option>Open</option>
-<option>Closed</option>
-<option>Follow Up</option>
-</select>
-</div>
+            </div>
 
-</div>
+        </div>
 
-</div>
+        <!-- FAMILY SITUATION -->
 
-<div class="actions">
+        <div class="card">
 
-<button id="saveBtn">
-Save Case
-</button>
+            <div class="section-title">
+                Family Situation
+            </div>
 
-<button onclick="window.print()">
-Print
-</button>
+            <div class="grid-2">
 
-</div>
+                <div class="form-group">
+                    <label>Mother</label>
+                    <select id="motherCondition">
+                        <option>N/A</option>
+                        <option>Healthy</option>
+                        <option>Unhealthy</option>
+                        <option>No Communication</option>
+                        <option>Deceased</option>
+                    </select>
+                </div>
 
-</div>
+                <div class="form-group">
+                    <label>Father</label>
+                    <select id="fatherCondition">
+                        <option>N/A</option>
+                        <option>Healthy</option>
+                        <option>Unhealthy</option>
+                        <option>No Communication</option>
+                        <option>Deceased</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Sister</label>
+                    <select id="sisterCondition">
+                        <option>N/A</option>
+                        <option>Healthy</option>
+                        <option>Unhealthy</option>
+                        <option>No Communication</option>
+                        <option>Deceased</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Brother</label>
+                    <select id="brotherCondition">
+                        <option>N/A</option>
+                        <option>Healthy</option>
+                        <option>Unhealthy</option>
+                        <option>No Communication</option>
+                        <option>Deceased</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Wife</label>
+                    <select id="wifeCondition">
+                        <option>N/A</option>
+                        <option>Healthy</option>
+                        <option>Unhealthy</option>
+                        <option>No Communication</option>
+                        <option>Deceased</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Husband</label>
+                    <select id="husbandCondition">
+                        <option>N/A</option>
+                        <option>Healthy</option>
+                        <option>Unhealthy</option>
+                        <option>No Communication</option>
+                        <option>Deceased</option>
+                    </select>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- SLEEP ISSUES -->
+
+        <div class="card">
+
+            <div class="section-title">
+                Sleep Issues
+            </div>
+
+            <div class="grid">
+
+                <div class="form-group">
+                    <label>Present?</label>
+                    <select id="sleepIssues">
+                        <option value="">Select</option>
+                        <option>Yes</option>
+                        <option>No</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Start Date</label>
+                    <input id="sleepStartDate" type="date">
+                </div>
+
+                <div class="form-group">
+                    <label>Medication</label>
+                    <select id="sleepMedication">
+                        <option>N/A</option>
+                        <option>Yes</option>
+                        <option>No</option>
+                    </select>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- SUICIDAL IDEATION -->
+
+        <div class="card">
+
+            <div class="section-title">
+                Suicidal Ideation
+            </div>
+
+            <div class="grid">
+
+                <div class="form-group">
+                    <label>Present?</label>
+                    <select id="suicidalIdeation">
+                        <option value="">Select</option>
+                        <option>Yes</option>
+                        <option>No</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Start Date</label>
+                    <input id="suicidalStartDate" type="date">
+                </div>
+
+                <div class="form-group">
+                    <label>Thought?</label>
+                    <select id="suicidalThought">
+                        <option>N/A</option>
+                        <option>Yes</option>
+                        <option>No</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Attempted?</label>
+                    <select id="suicidalAttempted">
+                        <option>N/A</option>
+                        <option>Yes</option>
+                        <option>No</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Managed?</label>
+                    <select id="suicidalManaged">
+                        <option>N/A</option>
+                        <option>Yes</option>
+                        <option>No</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>How Managed</label>
+                    <input id="howManaged">
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- NSSI -->
+
+        <div class="card">
+
+            <div class="section-title">
+                NSSI
+            </div>
+
+            <div class="grid">
+
+                <div class="form-group">
+                    <label>Present?</label>
+                    <select id="nssi">
+                        <option value="">Select</option>
+                        <option>Yes</option>
+                        <option>No</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>How Feel</label>
+                    <textarea id="nssiFeel"></textarea>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- COPING MECHANISM -->
+
+        <div class="card">
+
+            <div class="section-title">
+                Coping Mechanism
+            </div>
+
+            <div class="grid">
+
+                <div class="form-group">
+                    <label>Present?</label>
+                    <select id="copingMechanism">
+                        <option value="">Select</option>
+                        <option>Yes</option>
+                        <option>No</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>How Feel</label>
+                    <textarea id="copingFeel"></textarea>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- FAMILY SITUATION -->
+
+        <div class="card">
+
+            <div class="section-title">
+                Family Situation
+            </div>
+
+            <div class="grid-2">
+
+                <div class="form-group">
+                    <label>Mother</label>
+                    <select id="motherCondition">
+                        <option>N/A</option>
+                        <option>Healthy</option>
+                        <option>Unhealthy</option>
+                        <option>No Communication</option>
+                        <option>Deceased</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Father</label>
+                    <select id="fatherCondition">
+                        <option>N/A</option>
+                        <option>Healthy</option>
+                        <option>Unhealthy</option>
+                        <option>No Communication</option>
+                        <option>Deceased</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Sister</label>
+                    <select id="sisterCondition">
+                        <option>N/A</option>
+                        <option>Healthy</option>
+                        <option>Unhealthy</option>
+                        <option>No Communication</option>
+                        <option>Deceased</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Brother</label>
+                    <select id="brotherCondition">
+                        <option>N/A</option>
+                        <option>Healthy</option>
+                        <option>Unhealthy</option>
+                        <option>No Communication</option>
+                        <option>Deceased</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Wife</label>
+                    <select id="wifeCondition">
+                        <option>N/A</option>
+                        <option>Healthy</option>
+                        <option>Unhealthy</option>
+                        <option>No Communication</option>
+                        <option>Deceased</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Husband</label>
+                    <select id="husbandCondition">
+                        <option>N/A</option>
+                        <option>Healthy</option>
+                        <option>Unhealthy</option>
+                        <option>No Communication</option>
+                        <option>Deceased</option>
+                    </select>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- SLEEP ISSUES -->
+
+        <div class="card">
+
+            <div class="section-title">
+                Sleep Issues
+            </div>
+
+            <div class="grid">
+
+                <div class="form-group">
+                    <label>Present?</label>
+                    <select id="sleepIssues">
+                        <option value="">Select</option>
+                        <option>Yes</option>
+                        <option>No</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Start Date</label>
+                    <input id="sleepStartDate" type="date">
+                </div>
+
+                <div class="form-group">
+                    <label>Medication</label>
+                    <select id="sleepMedication">
+                        <option>N/A</option>
+                        <option>Yes</option>
+                        <option>No</option>
+                    </select>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- SUICIDAL IDEATION -->
+
+        <div class="card">
+
+            <div class="section-title">
+                Suicidal Ideation
+            </div>
+
+            <div class="grid">
+
+                <div class="form-group">
+                    <label>Present?</label>
+                    <select id="suicidalIdeation">
+                        <option value="">Select</option>
+                        <option>Yes</option>
+                        <option>No</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Start Date</label>
+                    <input id="suicidalStartDate" type="date">
+                </div>
+
+                <div class="form-group">
+                    <label>Thought?</label>
+                    <select id="suicidalThought">
+                        <option>N/A</option>
+                        <option>Yes</option>
+                        <option>No</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Attempted?</label>
+                    <select id="suicidalAttempted">
+                        <option>N/A</option>
+                        <option>Yes</option>
+                        <option>No</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Managed?</label>
+                    <select id="suicidalManaged">
+                        <option>N/A</option>
+                        <option>Yes</option>
+                        <option>No</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>How Managed</label>
+                    <input id="howManaged">
+                </div>
+
+            </div>
+
+
+        </div>
+
+        <!-- NSSI -->
+
+        <div class="card">
+
+            <div class="section-title">
+                NSSI
+            </div>
+
+            <div class="grid">
+
+                <div class="form-group">
+                    <label>Present?</label>
+                    <select id="nssi">
+                        <option value="">Select</option>
+                        <option>Yes</option>
+                        <option>No</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>How Feel</label>
+                    <textarea id="nssiFeel"></textarea>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- COPING MECHANISM -->
+
+        <div class="card">
+
+            <div class="section-title">
+                Coping Mechanism
+            </div>
+
+            <div class="grid">
+
+                <div class="form-group">
+                    <label>Present?</label>
+                    <select id="copingMechanism">
+                        <option value="">Select</option>
+                        <option>Yes</option>
+                        <option>No</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>How Feel</label>
+                    <textarea id="copingFeel"></textarea>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- SUPPORT OFFERED -->
+
+        <div class="card">
+
+            <div class="section-title">
+                Support Offered
+            </div>
+                <div class="grid">
+
+                    <div class="form-group">
+
+                        <label>Category</label>
+
+                        <select id="supportCategory">
+
+                            <option value="">
+                                Select Category
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label>Support Offered</label>
+
+                        <select id="resources" multiple>
+                        </select>
+
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>Support Remark</label>
+
+                    <textarea id="resourceRemarks">
+</textarea>
+
+                </div>
+
+            </div>
+
+
+            <!-- PHRASES BUTTON -->
+
+            <button id="phrasesBtn" class="phrases-fab">
+
+                💬
+
+            </button>
+
+            <!-- PHRASES DRAWER -->
+
+            <div id="phrasesDrawer" class="phrases-drawer">
+
+                <div class="phrases-header">
+
+                    Phrases
+
+                    <button id="closePhrases">
+                        ✕
+                    </button>
+
+                </div>
+
+                <div class="phrases-body">
+
+                    <div class="phrase-item">
+                        I'm here to listen and support you. I understand that you've been experiencing...
+                    </div>
+
+                    <div class="phrase-item">
+                        Can you share more about what you're currently feeling or facing?
+                    </div>
+
+                    <div class="phrase-item">
+                        It sounds like you've been dealing with a lot. I hear that anxiety and panic attacks are
+                        affecting
+                        your day.
+                    </div>
+
+                    <div class="phrase-item">
+                        Would you be open to sharing what might be causing these feelings?
+                    </div>
+
+                    <div class="phrase-item">
+                        It's understandable that this change can bring anxiety and panic.
+                    </div>
+
+                    <div class="phrase-item">
+                        Thank you for sharing that with me.
+                    </div>
+
+                    <div class="phrase-item">
+                        Would you like to talk more about your relationship or focus elsewhere today?
+                    </div>
+
+                    <div class="phrase-item">
+                        Have any activities or practices helped you find some relief?
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
 </body>
+
 </html>
