@@ -3,14 +3,14 @@ console.log("app.js loaded");
 let selectedIssues = [];
 let selectedSubIssues = [];
 let selectedResources = [];
+
 document.addEventListener(
 "DOMContentLoaded",
 async () => {
 
-await loadCategories();
 await loadIssues();
 await loadCategories();
-
+await loadResources();
 
 document
 .getElementById("addIssueBtn")
@@ -41,6 +41,13 @@ issueChanged
 );
 
 document
+.getElementById("supportCategory")
+.addEventListener(
+"change",
+categoryChanged
+);
+
+document
 .getElementById("saveBtn")
 .addEventListener(
 "click",
@@ -61,21 +68,17 @@ document
 closePhrases
 );
 
-document
-.getElementById("supportCategory")
-.addEventListener(
-"change",
-categoryChanged
-);
-
 });
+
 
 function addIssue(){
 
 const select =
-document.getElementById(
-"issues"
-);
+document.getElementById("issues");
+
+if(!select.value){
+return;
+}
 
 const id =
 Number(select.value);
@@ -115,28 +118,21 @@ selectedIssues.forEach(
 issue => {
 
 const chip =
-document.createElement(
-"div"
-);
+document.createElement("div");
 
 chip.className =
 "chip";
 
 chip.innerHTML = `
-
 ${issue.text}
-
 <button
 type="button"
 onclick="removeIssue(${issue.id})">
 ×
 </button>
-
 `;
 
-box.appendChild(
-chip
-);
+box.appendChild(chip);
 
 });
 
@@ -153,16 +149,6 @@ renderIssues();
 
 }
 
-function removeIssue(id){
-
-selectedIssues =
-selectedIssues.filter(
-x => x.id !== id
-);
-
-renderIssues();
-
-}
 
 function addSubIssue(){
 
@@ -170,6 +156,10 @@ const select =
 document.getElementById(
 "subIssues"
 );
+
+if(!select.value){
+return;
+}
 
 const id =
 Number(select.value);
@@ -209,28 +199,21 @@ selectedSubIssues.forEach(
 item => {
 
 const chip =
-document.createElement(
-"div"
-);
+document.createElement("div");
 
 chip.className =
 "chip";
 
 chip.innerHTML = `
-
 ${item.text}
-
 <button
 type="button"
 onclick="removeSubIssue(${item.id})">
 ×
 </button>
-
 `;
 
-box.appendChild(
-chip
-);
+box.appendChild(chip);
 
 });
 
@@ -253,6 +236,10 @@ const select =
 document.getElementById(
 "resources"
 );
+
+if(!select.value){
+return;
+}
 
 const id =
 Number(select.value);
@@ -300,24 +287,32 @@ chip.className =
 "chip";
 
 chip.innerHTML = `
-
 ${item.text}
-
 <button
 type="button"
 onclick="removeResource(${item.id})">
 ×
 </button>
-
 `;
 
-box.appendChild(
-chip
-);
+box.appendChild(chip);
 
 });
 
 }
+
+function removeResource(id){
+
+selectedResources =
+selectedResources.filter(
+x => x.id !== id
+);
+
+renderResources();
+
+}
+
+
 
 function renderResources(){
 
@@ -340,12 +335,211 @@ chip.className =
 "chip";
 
 chip.innerHTML = `
-
 ${item.text}
-
 <button
 type="button"
 onclick="removeResource(${item.id})">
+×
+</button>
+`;
+
+box.appendChild(chip);
+
+});
+
+}
+
+function removeResource(id){
+
+selectedResources =
+selectedResources.filter(
+x => x.id !== id
+);
+
+renderResources();
+
+}
+
+
+async function saveCase(){
+
+const client_name =
+document.getElementById(
+"clientName"
+).value;
+
+const age =
+document.getElementById(
+"age"
+).value;
+
+const gender =
+document.getElementById(
+"gender"
+).value;
+
+const occupation =
+document.getElementById(
+"occupation"
+).value;
+
+const issue_remarks =
+document.getElementById(
+"issueRemarks"
+).value;
+
+const sub_issue_remarks =
+document.getElementById(
+"subIssueRemarks"
+).value;
+
+const support_remark =
+document.getElementById(
+"supportRemark"
+).value;
+
+const counsellor_remarks =
+document.getElementById(
+"counsellorRemarks"
+).value;
+
+const case_summary =
+document.getElementById(
+"caseSummary"
+).value;
+
+const session_duration =
+document.getElementById(
+"sessionDuration"
+).value;
+
+const { data: caseRow, error } =
+await supabaseClient
+.from("cases")
+.insert([{
+
+client_name,
+age,
+gender,
+occupation,
+
+issue_remarks,
+sub_issue_remarks,
+
+support_remark,
+
+counsellor_remarks,
+case_summary,
+
+session_duration
+
+}])
+.select()
+.single();
+
+if(error){
+
+console.log(error);
+
+alert(
+error.message
+);
+
+return;
+
+}
+
+const caseId =
+caseRow.id;
+
+
+for(const issue of selectedIssues){
+
+await supabaseClient
+.from("case_issues")
+.insert([{
+
+case_id: caseId,
+issue_id: issue.id
+
+}]);
+
+}
+
+for(const subIssue of selectedSubIssues){
+
+await supabaseClient
+.from("case_sub_issues")
+.insert([{
+
+case_id: caseId,
+sub_issue_id: subIssue.id
+
+}]);
+
+}
+
+
+for(const resource of selectedResources){
+
+await supabaseClient
+.from("case_resources")
+.insert([{
+
+case_id: caseId,
+resource_id: resource.id
+
+}]);
+
+}
+
+alert(
+"Case Saved Successfully"
+);
+
+location.reload();
+
+}
+
+function removeResource(id){
+
+selectedResources =
+selectedResources.filter(
+x => x.id !== id
+);
+
+renderResources();
+
+}
+
+
+function renderResources(){
+
+const box =
+document.getElementById(
+"selectedResources"
+);
+
+box.innerHTML = "";
+
+selectedResources.forEach(
+resource => {
+
+const chip =
+document.createElement(
+"div"
+);
+
+chip.className =
+"chip";
+
+chip.innerHTML = `
+
+${resource.text}
+
+<button
+type="button"
+onclick="removeResource(${resource.id})">
 ×
 </button>
 
@@ -359,34 +553,65 @@ chip
 
 }
 
-function openPhrases(){
+async function categoryChanged(){
 
-document
-.getElementById(
-"phrasesDrawer"
-)
-.classList.add(
-"open"
+const categoryId =
+document.getElementById(
+"supportCategory"
+).value;
+
+const resourceBox =
+document.getElementById(
+"resources"
 );
+
+resourceBox.innerHTML =
+'<option value="">Select Resource</option>';
+
+if(!categoryId){
+return;
+}
+
+const { data, error } =
+await supabaseClient
+.from("resources")
+.select("*")
+.eq(
+"category",
+categoryId
+)
+.order("title");
+
+if(error){
+
+console.log(error);
+
+return;
 
 }
 
-function closePhrases(){
+data.forEach(resource => {
 
-document
-.getElementById(
-"phrasesDrawer"
-)
-.classList.remove(
-"open"
+const option =
+document.createElement(
+"option"
 );
 
-}
+option.value =
+resource.id;
 
+option.textContent =
+resource.title;
+
+resourceBox.appendChild(
+option
+);
+
+});
+
+}
 
 async function loadIssues(){
-
-console.log("loading issues");
 
 const { data, error } =
 await supabaseClient
@@ -394,27 +619,81 @@ await supabaseClient
 .select("*")
 .order("name");
 
-console.log(data);
-console.log(error);
-
 if(error){
-    return;
+console.log(error);
+return;
 }
 
-const issueBox =
+const box =
 document.getElementById("issues");
 
-issueBox.innerHTML = "";
+if(!box){
+return;
+}
+
+box.innerHTML =
+'<option value="">Select Issue</option>';
 
 data.forEach(issue => {
 
-    const option =
-    document.createElement("option");
+const option =
+document.createElement("option");
 
-    option.value = issue.id;
-    option.textContent = issue.name;
+option.value =
+issue.id;
 
-    issueBox.appendChild(option);
+option.textContent =
+issue.name;
+
+box.appendChild(option);
+
+});
+
+}
+
+async function issueChanged(){
+
+const issueId =
+document.getElementById("issues").value;
+
+const subBox =
+document.getElementById("subIssues");
+
+if(!subBox){
+return;
+}
+
+subBox.innerHTML =
+'<option value="">Select Sub Issue</option>';
+
+if(!issueId){
+return;
+}
+
+const { data, error } =
+await supabaseClient
+.from("sub_issues")
+.select("*")
+.eq("issue_id", issueId)
+.order("name");
+
+if(error){
+console.log(error);
+return;
+}
+
+data.forEach(sub => {
+
+const option =
+document.createElement("option");
+
+option.value =
+sub.id;
+
+option.textContent =
+sub.name;
+
+subBox.appendChild(option);
 
 });
 
@@ -428,10 +707,8 @@ await supabaseClient
 .select("*")
 .order("name");
 
-console.log(data);
-console.log(error);
-
 if(error){
+console.log(error);
 return;
 }
 
@@ -452,8 +729,11 @@ data.forEach(cat => {
 const option =
 document.createElement("option");
 
-option.value = cat.id;
-option.textContent = cat.name;
+option.value =
+cat.id;
+
+option.textContent =
+cat.name;
 
 select.appendChild(option);
 
@@ -462,187 +742,18 @@ select.appendChild(option);
 }
 
 async function loadResources(){
-console.log("loading resources");
-const { data } =
-await supabaseClient
-.from("resources")
-.select("*")
-.order("title");
-
-const box =
-document.getElementById("resources");
-
-box.innerHTML = "";
-
-data.forEach(resource => {
-
-const option =
-document.createElement("option");
-
-option.value = resource.id;
-option.textContent = resource.title;
-
-box.appendChild(option);
-
-});
-
-}
-
-
-async function saveCase(){
-
-const client_name =
-document.getElementById("clientName").value;
-
-const age =
-document.getElementById("age").value;
-
-const gender =
-document.getElementById("gender").value;
-
-const issue_remarks =
-document.getElementById("issueRemarks").value;
-
-const resource_remarks =
-document.getElementById("resourceRemarks").value;
-
-const counsellor_remarks =
-document.getElementById("counsellorRemarks").value;
-
-const case_summary =
-document.getElementById("caseSummary").value;
-
-const session_duration =
-document.getElementById("sessionDuration").value;
-
-const follow_up_required =
-document.getElementById("followUpRequired").checked;
-
-const follow_up_date =
-document.getElementById("followUpDate").value;
-
-const notes =
-document.getElementById("generalRemarks").value;
-
-const case_status =
-document.getElementById("caseStatus").value;
-
-const { data: caseRow , error } =
-await supabaseClient
-.from("cases")
-.insert([{
-client_name,
-age,
-gender,
-issue_remarks,
-resource_remarks,
-counsellor_remarks,
-case_summary,
-session_duration,
-follow_up_required,
-follow_up_date,
-notes,
-case_status
-}])
-.select()
-.single();
-
-if(error){
-
-alert(error.message);
-return;
-
-}
-
-const caseId = caseRow.id;
-
-for(const issue of selectedIssues){
-
-await supabaseClient
-.from("case_issues")
-.insert([{
-case_id: caseId,
-issue_id: issue.id
-}]);
-
-}
-}
-
-for(const subIssue of selectedSubIssues){
-
-await supabaseClient
-.from("case_sub_issues")
-.insert([{
-case_id: caseId,
-sub_issue_id: subIssue.id
-}]);
-
-}
-
-
-
-async function loadCategories(){
-
-const { data } =
-await supabaseClient
-.from("knowledge_categories")
-.select("*")
-.order("name");
-
-const select =
-document.getElementById(
-"supportCategory"
-);
-
-select.innerHTML =
-'<option value="">Select Category</option>';
-
-data.forEach(cat=>{
-
-const option =
-document.createElement("option");
-
-option.value = cat.id;
-option.textContent = cat.name;
-
-select.appendChild(option);
-
-});
-
-}
-
-
-async function categoryChanged(){
-
-const category =
-document.getElementById(
-"supportCategory"
-).value;
-
-const { data } =
-await supabaseClient
-.from("resources")
-.select("*")
-.eq("category", category)
-.order("title");
 
 const box =
 document.getElementById(
 "resources"
 );
 
-box.innerHTML = "";
+if(!box){
+return;
+}
 
-data.forEach(resource=>{
-
-const option =
-document.createElement("option");
-
-option.value = resource.id;
-option.textContent = resource.title;
-
-box.appendChild(option);
-
-});
+box.innerHTML =
+'<option value="">Select Resource</option>';
 
 }
+

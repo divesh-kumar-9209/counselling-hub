@@ -111,6 +111,104 @@
 
         </div>
 
+
+        <!-- MAIN ISSUES -->
+
+        <div class="card">
+
+            <div class="section-title">
+                Main Issues
+            </div>
+
+            <div class="grid">
+
+                <div class="form-group">
+
+                    <label>Select Issue</label>
+
+                    <select id="issues">
+                        <option value="">
+                            Select Issue
+                        </option>
+                    </select>
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>&nbsp;</label>
+
+                    <button type="button" id="addIssueBtn">
+                        Add Issue
+                    </button>
+
+                </div>
+
+            </div>
+
+            <div id="selectedIssues" class="chips-container">
+            </div>
+
+            <div class="form-group">
+
+                <label>Issue Remarks</label>
+
+                <textarea id="issueRemarks">
+        </textarea>
+
+            </div>
+
+        </div>
+
+        <!-- SUB ISSUES -->
+
+        <div class="card">
+
+            <div class="section-title">
+                Sub Issues
+            </div>
+
+            <div class="grid">
+
+                <div class="form-group">
+
+                    <label>Select Sub Issue</label>
+
+                    <select id="subIssues">
+                        <option value="">
+                            Select Sub Issue
+                        </option>
+                    </select>
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>&nbsp;</label>
+
+                    <button type="button" id="addSubIssueBtn">
+                        Add Sub Issue
+                    </button>
+
+                </div>
+
+            </div>
+
+            <div id="selectedSubIssues" class="chips-container">
+            </div>
+
+            <div class="form-group">
+
+                <label>Sub Issue Remarks</label>
+
+                <textarea id="subIssueRemarks">
+        </textarea>
+
+            </div>
+
+        </div>
+
+
         <!-- SUPPORT SYSTEM -->
 
         <div class="card">
@@ -439,240 +537,6 @@
 
         </div>
 
-        <!-- FAMILY SITUATION -->
-
-        <div class="card">
-
-            <div class="section-title">
-                Family Situation
-            </div>
-
-            <div class="grid-2">
-
-                <div class="form-group">
-                    <label>Mother</label>
-                    <select id="motherCondition">
-                        <option>N/A</option>
-                        <option>Healthy</option>
-                        <option>Unhealthy</option>
-                        <option>No Communication</option>
-                        <option>Deceased</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label>Father</label>
-                    <select id="fatherCondition">
-                        <option>N/A</option>
-                        <option>Healthy</option>
-                        <option>Unhealthy</option>
-                        <option>No Communication</option>
-                        <option>Deceased</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label>Sister</label>
-                    <select id="sisterCondition">
-                        <option>N/A</option>
-                        <option>Healthy</option>
-                        <option>Unhealthy</option>
-                        <option>No Communication</option>
-                        <option>Deceased</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label>Brother</label>
-                    <select id="brotherCondition">
-                        <option>N/A</option>
-                        <option>Healthy</option>
-                        <option>Unhealthy</option>
-                        <option>No Communication</option>
-                        <option>Deceased</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label>Wife</label>
-                    <select id="wifeCondition">
-                        <option>N/A</option>
-                        <option>Healthy</option>
-                        <option>Unhealthy</option>
-                        <option>No Communication</option>
-                        <option>Deceased</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label>Husband</label>
-                    <select id="husbandCondition">
-                        <option>N/A</option>
-                        <option>Healthy</option>
-                        <option>Unhealthy</option>
-                        <option>No Communication</option>
-                        <option>Deceased</option>
-                    </select>
-                </div>
-
-            </div>
-
-        </div>
-
-        <!-- SLEEP ISSUES -->
-
-        <div class="card">
-
-            <div class="section-title">
-                Sleep Issues
-            </div>
-
-            <div class="grid">
-
-                <div class="form-group">
-                    <label>Present?</label>
-                    <select id="sleepIssues">
-                        <option value="">Select</option>
-                        <option>Yes</option>
-                        <option>No</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label>Start Date</label>
-                    <input id="sleepStartDate" type="date">
-                </div>
-
-                <div class="form-group">
-                    <label>Medication</label>
-                    <select id="sleepMedication">
-                        <option>N/A</option>
-                        <option>Yes</option>
-                        <option>No</option>
-                    </select>
-                </div>
-
-            </div>
-
-        </div>
-
-        <!-- SUICIDAL IDEATION -->
-
-        <div class="card">
-
-            <div class="section-title">
-                Suicidal Ideation
-            </div>
-
-            <div class="grid">
-
-                <div class="form-group">
-                    <label>Present?</label>
-                    <select id="suicidalIdeation">
-                        <option value="">Select</option>
-                        <option>Yes</option>
-                        <option>No</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label>Start Date</label>
-                    <input id="suicidalStartDate" type="date">
-                </div>
-
-                <div class="form-group">
-                    <label>Thought?</label>
-                    <select id="suicidalThought">
-                        <option>N/A</option>
-                        <option>Yes</option>
-                        <option>No</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label>Attempted?</label>
-                    <select id="suicidalAttempted">
-                        <option>N/A</option>
-                        <option>Yes</option>
-                        <option>No</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label>Managed?</label>
-                    <select id="suicidalManaged">
-                        <option>N/A</option>
-                        <option>Yes</option>
-                        <option>No</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label>How Managed</label>
-                    <input id="howManaged">
-                </div>
-
-            </div>
-
-
-        </div>
-
-        <!-- NSSI -->
-
-        <div class="card">
-
-            <div class="section-title">
-                NSSI
-            </div>
-
-            <div class="grid">
-
-                <div class="form-group">
-                    <label>Present?</label>
-                    <select id="nssi">
-                        <option value="">Select</option>
-                        <option>Yes</option>
-                        <option>No</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label>How Feel</label>
-                    <textarea id="nssiFeel"></textarea>
-                </div>
-
-            </div>
-
-        </div>
-
-        <!-- COPING MECHANISM -->
-
-        <div class="card">
-
-            <div class="section-title">
-                Coping Mechanism
-            </div>
-
-            <div class="grid">
-
-                <div class="form-group">
-                    <label>Present?</label>
-                    <select id="copingMechanism">
-                        <option value="">Select</option>
-                        <option>Yes</option>
-                        <option>No</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label>How Feel</label>
-                    <textarea id="copingFeel"></textarea>
-                </div>
-
-            </div>
-
-        </div>
-
 
         <!-- SUPPORT OFFERED -->
 
@@ -703,6 +567,13 @@
 
                     <select id="resources" multiple>
                     </select>
+
+                    <button type="button" id="addResourceBtn">
+                        Add Resource
+                    </button>
+
+                    <div id="selectedResources" class="chips-container">
+                    </div>
 
                 </div>
 
