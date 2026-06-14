@@ -22,12 +22,35 @@ async function loadIssues(){
 
 console.log("loading issues");
 
-const result =
+const { data, error } =
 await supabaseClient
 .from("issues")
-.select("*");
+.select("*")
+.order("name");
 
-console.log(result);
+console.log(data);
+console.log(error);
+
+if(error){
+    return;
+}
+
+const issueBox =
+document.getElementById("issues");
+
+issueBox.innerHTML = "";
+
+data.forEach(issue => {
+
+    const option =
+    document.createElement("option");
+
+    option.value = issue.id;
+    option.textContent = issue.name;
+
+    issueBox.appendChild(option);
+
+});
 
 }
 
