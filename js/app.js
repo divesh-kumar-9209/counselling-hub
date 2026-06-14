@@ -420,6 +420,47 @@ data.forEach(issue => {
 
 }
 
+async function loadCategories(){
+
+const { data, error } =
+await supabaseClient
+.from("knowledge_categories")
+.select("*")
+.order("name");
+
+console.log(data);
+console.log(error);
+
+if(error){
+return;
+}
+
+const select =
+document.getElementById(
+"supportCategory"
+);
+
+if(!select){
+return;
+}
+
+select.innerHTML =
+'<option value="">Select Category</option>';
+
+data.forEach(cat => {
+
+const option =
+document.createElement("option");
+
+option.value = cat.id;
+option.textContent = cat.name;
+
+select.appendChild(option);
+
+});
+
+}
+
 async function loadResources(){
 console.log("loading resources");
 const { data } =
