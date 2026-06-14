@@ -16,28 +16,28 @@ document
 
 });
 
-async function loadIssues() {
+async function loadIssues(){
 
-const result = await supabaseClient
+const result =
+await supabaseClient
 .from("issues")
-.select("*")
-.order("name");
+.select("*");
 
-console.log("issues result", result);
-
-if(result.error){
-    console.error(result.error);
-    return;
-}
-
-const data = result.data;
+console.log(result);
 
 const issueBox =
 document.getElementById("issues");
 
 issueBox.innerHTML = "";
 
-data.forEach(issue => {
+if(!Array.isArray(result.data)){
+    console.log("DATA NOT ARRAY");
+    console.log(result.data);
+    console.log(result.error);
+    return;
+}
+
+result.data.forEach(issue => {
 
 const option =
 document.createElement("option");
