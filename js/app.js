@@ -3,127 +3,149 @@ console.log("app.js loaded");
 let selectedIssues = [];
 let selectedSubIssues = [];
 let selectedResources = [];
+let allIssues = [];
+let allSubIssues = [];
+let allResources = [];
 
 document.addEventListener(
-"DOMContentLoaded",
-async () => {
+    "DOMContentLoaded",
+    async () => {
 
-await loadIssues();
-await loadCategories();
-await loadResources();
+        await loadIssues();
+        await loadCategories();
+        await loadResources();
 
-document
-.getElementById("addIssueBtn")
-.addEventListener(
-"click",
-addIssue
-);
+        document
+            .getElementById("addIssueBtn")
+            .addEventListener(
+                "click",
+                addIssue
+            );
 
-document
-.getElementById("addSubIssueBtn")
-.addEventListener(
-"click",
-addSubIssue
-);
+        document
+            .getElementById("addSubIssueBtn")
+            .addEventListener(
+                "click",
+                addSubIssue
+            );
 
-document
-.getElementById("addResourceBtn")
-.addEventListener(
-"click",
-addResource
-);
+        document
+            .getElementById("addResourceBtn")
+            .addEventListener(
+                "click",
+                addResource
+            );
 
-document
-.getElementById("issues")
-.addEventListener(
-"change",
-issueChanged
-);
+        document
+            .getElementById("issues")
+            .addEventListener(
+                "change",
+                issueChanged
+            );
 
-document
-.getElementById("supportCategory")
-.addEventListener(
-"change",
-categoryChanged
-);
+        document
+            .getElementById("supportCategory")
+            .addEventListener(
+                "change",
+                categoryChanged
+            );
 
-document
-.getElementById("saveBtn")
-.addEventListener(
-"click",
-saveCase
-);
+        document
+            .getElementById("saveBtn")
+            .addEventListener(
+                "click",
+                saveCase
+            );
 
-document
-.getElementById("phrasesBtn")
-.addEventListener(
-"click",
-openPhrases
-);
+        document
+            .getElementById("phrasesBtn")
+            .addEventListener(
+                "click",
+                openPhrases
+            );
 
-document
-.getElementById("closePhrases")
-.addEventListener(
-"click",
-closePhrases
-);
+        document
+            .getElementById("closePhrases")
+            .addEventListener(
+                "click",
+                closePhrases
+            );
+        
 
-});
+        document
+            .getElementById(
+                "subIssueSearch"
+            )
+            .addEventListener(
+                "input",
+                filterSubIssues
+            );
+
+        document
+            .getElementById(
+                "resourceSearch"
+            )
+            .addEventListener(
+                "input",
+                filterResources
+            );
+
+    });
 
 
-function addIssue(){
+function addIssue() {
 
-const select =
-document.getElementById("issues");
+    const select =
+        document.getElementById("issues");
 
-if(!select.value){
-return;
+    if (!select.value) {
+        return;
+    }
+
+    const id =
+        Number(select.value);
+
+    const text =
+        select.options[
+            select.selectedIndex
+        ].text;
+
+    if (
+        selectedIssues.some(
+            x => x.id === id
+        )
+    ) {
+        return;
+    }
+
+    selectedIssues.push({
+        id,
+        text
+    });
+
+    renderIssues();
+
 }
 
-const id =
-Number(select.value);
+function renderIssues() {
 
-const text =
-select.options[
-select.selectedIndex
-].text;
+    const box =
+        document.getElementById(
+            "selectedIssues"
+        );
 
-if(
-selectedIssues.some(
-x => x.id === id
-)
-){
-return;
-}
+    box.innerHTML = "";
 
-selectedIssues.push({
-id,
-text
-});
+    selectedIssues.forEach(
+        issue => {
 
-renderIssues();
+            const chip =
+                document.createElement("div");
 
-}
+            chip.className =
+                "chip";
 
-function renderIssues(){
-
-const box =
-document.getElementById(
-"selectedIssues"
-);
-
-box.innerHTML = "";
-
-selectedIssues.forEach(
-issue => {
-
-const chip =
-document.createElement("div");
-
-chip.className =
-"chip";
-
-chip.innerHTML = `
+            chip.innerHTML = `
 ${issue.text}
 <button
 type="button"
@@ -132,79 +154,79 @@ onclick="removeIssue(${issue.id})">
 </button>
 `;
 
-box.appendChild(chip);
+            box.appendChild(chip);
 
-});
-
-}
-
-function removeIssue(id){
-
-selectedIssues =
-selectedIssues.filter(
-x => x.id !== id
-);
-
-renderIssues();
+        });
 
 }
 
+function removeIssue(id) {
 
-function addSubIssue(){
+    selectedIssues =
+        selectedIssues.filter(
+            x => x.id !== id
+        );
 
-const select =
-document.getElementById(
-"subIssues"
-);
-
-if(!select.value){
-return;
-}
-
-const id =
-Number(select.value);
-
-const text =
-select.options[
-select.selectedIndex
-].text;
-
-if(
-selectedSubIssues.some(
-x => x.id === id
-)
-){
-return;
-}
-
-selectedSubIssues.push({
-id,
-text
-});
-
-renderSubIssues();
+    renderIssues();
 
 }
 
-function renderSubIssues(){
 
-const box =
-document.getElementById(
-"selectedSubIssues"
-);
+function addSubIssue() {
 
-box.innerHTML = "";
+    const select =
+        document.getElementById(
+            "subIssues"
+        );
 
-selectedSubIssues.forEach(
-item => {
+    if (!select.value) {
+        return;
+    }
 
-const chip =
-document.createElement("div");
+    const id =
+        Number(select.value);
 
-chip.className =
-"chip";
+    const text =
+        select.options[
+            select.selectedIndex
+        ].text;
 
-chip.innerHTML = `
+    if (
+        selectedSubIssues.some(
+            x => x.id === id
+        )
+    ) {
+        return;
+    }
+
+    selectedSubIssues.push({
+        id,
+        text
+    });
+
+    renderSubIssues();
+
+}
+
+function renderSubIssues() {
+
+    const box =
+        document.getElementById(
+            "selectedSubIssues"
+        );
+
+    box.innerHTML = "";
+
+    selectedSubIssues.forEach(
+        item => {
+
+            const chip =
+                document.createElement("div");
+
+            chip.className =
+                "chip";
+
+            chip.innerHTML = `
 ${item.text}
 <button
 type="button"
@@ -213,80 +235,80 @@ onclick="removeSubIssue(${item.id})">
 </button>
 `;
 
-box.appendChild(chip);
+            box.appendChild(chip);
 
-});
-
-}
-
-function removeSubIssue(id){
-
-selectedSubIssues =
-selectedSubIssues.filter(
-x => x.id !== id
-);
-
-renderSubIssues();
+        });
 
 }
 
-function addResource(){
+function removeSubIssue(id) {
 
-const select =
-document.getElementById(
-"resources"
-);
+    selectedSubIssues =
+        selectedSubIssues.filter(
+            x => x.id !== id
+        );
 
-if(!select.value){
-return;
-}
-
-const id =
-Number(select.value);
-
-const text =
-select.options[
-select.selectedIndex
-].text;
-
-if(
-selectedResources.some(
-x => x.id === id
-)
-){
-return;
-}
-
-selectedResources.push({
-id,
-text
-});
-
-renderResources();
+    renderSubIssues();
 
 }
 
-function renderResources(){
+function addResource() {
 
-const box =
-document.getElementById(
-"selectedResources"
-);
+    const select =
+        document.getElementById(
+            "resources"
+        );
 
-box.innerHTML = "";
+    if (!select.value) {
+        return;
+    }
 
-selectedResources.forEach(
-item => {
+    const id =
+        Number(select.value);
 
-const chip =
-document.createElement(
-"div"
-);
+    const text =
+        select.options[
+            select.selectedIndex
+        ].text;
 
-chip.className =
-"chip";
+    if (
+        selectedResources.some(
+            x => x.id === id
+        )
+    ) {
+        return;
+    }
 
-chip.innerHTML = `
+    selectedResources.push({
+        id,
+        text
+    });
+
+    renderResources();
+
+}
+
+function renderResources() {
+
+    const box =
+        document.getElementById(
+            "selectedResources"
+        );
+
+    box.innerHTML = "";
+
+    selectedResources.forEach(
+        item => {
+
+            const chip =
+                document.createElement(
+                    "div"
+                );
+
+            chip.className =
+                "chip";
+
+            chip.innerHTML = `
 ${item.text}
 <button
 type="button"
@@ -295,46 +317,46 @@ onclick="removeResource(${item.id})">
 </button>
 `;
 
-box.appendChild(chip);
+            box.appendChild(chip);
 
-});
-
-}
-
-function removeResource(id){
-
-selectedResources =
-selectedResources.filter(
-x => x.id !== id
-);
-
-renderResources();
+        });
 
 }
 
+function removeResource(id) {
+
+    selectedResources =
+        selectedResources.filter(
+            x => x.id !== id
+        );
+
+    renderResources();
+
+}
 
 
-function renderResources(){
 
-const box =
-document.getElementById(
-"selectedResources"
-);
+function renderResources() {
 
-box.innerHTML = "";
+    const box =
+        document.getElementById(
+            "selectedResources"
+        );
 
-selectedResources.forEach(
-item => {
+    box.innerHTML = "";
 
-const chip =
-document.createElement(
-"div"
-);
+    selectedResources.forEach(
+        item => {
 
-chip.className =
-"chip";
+            const chip =
+                document.createElement(
+                    "div"
+                );
 
-chip.innerHTML = `
+            chip.className =
+                "chip";
+
+            chip.innerHTML = `
 ${item.text}
 <button
 type="button"
@@ -343,197 +365,197 @@ onclick="removeResource(${item.id})">
 </button>
 `;
 
-box.appendChild(chip);
+            box.appendChild(chip);
 
-});
-
-}
-
-function removeResource(id){
-
-selectedResources =
-selectedResources.filter(
-x => x.id !== id
-);
-
-renderResources();
+        });
 
 }
 
+function removeResource(id) {
 
-async function saveCase(){
+    selectedResources =
+        selectedResources.filter(
+            x => x.id !== id
+        );
 
-const client_name =
-document.getElementById(
-"clientName"
-).value;
-
-const age =
-document.getElementById(
-"age"
-).value;
-
-const gender =
-document.getElementById(
-"gender"
-).value;
-
-const occupation =
-document.getElementById(
-"occupation"
-).value;
-
-const issue_remarks =
-document.getElementById(
-"issueRemarks"
-).value;
-
-const sub_issue_remarks =
-document.getElementById(
-"subIssueRemarks"
-).value;
-
-const support_remark =
-document.getElementById(
-"supportRemark"
-).value;
-
-const counsellor_remarks =
-document.getElementById(
-"counsellorRemarks"
-).value;
-
-const case_summary =
-document.getElementById(
-"caseSummary"
-).value;
-
-const session_duration =
-document.getElementById(
-"sessionDuration"
-).value;
-
-const { data: caseRow, error } =
-await supabaseClient
-.from("cases")
-.insert([{
-
-client_name,
-age,
-gender,
-occupation,
-
-issue_remarks,
-sub_issue_remarks,
-
-support_remark,
-
-counsellor_remarks,
-case_summary,
-
-session_duration
-
-}])
-.select()
-.single();
-
-if(error){
-
-console.log(error);
-
-alert(
-error.message
-);
-
-return;
-
-}
-
-const caseId =
-caseRow.id;
-
-
-for(const issue of selectedIssues){
-
-await supabaseClient
-.from("case_issues")
-.insert([{
-
-case_id: caseId,
-issue_id: issue.id
-
-}]);
-
-}
-
-for(const subIssue of selectedSubIssues){
-
-await supabaseClient
-.from("case_sub_issues")
-.insert([{
-
-case_id: caseId,
-sub_issue_id: subIssue.id
-
-}]);
+    renderResources();
 
 }
 
 
-for(const resource of selectedResources){
+async function saveCase() {
 
-await supabaseClient
-.from("case_resources")
-.insert([{
+    const client_name =
+        document.getElementById(
+            "clientName"
+        ).value;
 
-case_id: caseId,
-resource_id: resource.id
+    const age =
+        document.getElementById(
+            "age"
+        ).value;
 
-}]);
+    const gender =
+        document.getElementById(
+            "gender"
+        ).value;
+
+    const occupation =
+        document.getElementById(
+            "occupation"
+        ).value;
+
+    const issue_remarks =
+        document.getElementById(
+            "issueRemarks"
+        ).value;
+
+    const sub_issue_remarks =
+        document.getElementById(
+            "subIssueRemarks"
+        ).value;
+
+    const support_remark =
+        document.getElementById(
+            "supportRemark"
+        ).value;
+
+    const counsellor_remarks =
+        document.getElementById(
+            "counsellorRemarks"
+        ).value;
+
+    const case_summary =
+        document.getElementById(
+            "caseSummary"
+        ).value;
+
+    const session_duration =
+        document.getElementById(
+            "sessionDuration"
+        ).value;
+
+    const { data: caseRow, error } =
+        await supabaseClient
+            .from("cases")
+            .insert([{
+
+                client_name,
+                age,
+                gender,
+                occupation,
+
+                issue_remarks,
+                sub_issue_remarks,
+
+                support_remark,
+
+                counsellor_remarks,
+                case_summary,
+
+                session_duration
+
+            }])
+            .select()
+            .single();
+
+    if (error) {
+
+        console.log(error);
+
+        alert(
+            error.message
+        );
+
+        return;
+
+    }
+
+    const caseId =
+        caseRow.id;
+
+
+    for (const issue of selectedIssues) {
+
+        await supabaseClient
+            .from("case_issues")
+            .insert([{
+
+                case_id: caseId,
+                issue_id: issue.id
+
+            }]);
+
+    }
+
+    for (const subIssue of selectedSubIssues) {
+
+        await supabaseClient
+            .from("case_sub_issues")
+            .insert([{
+
+                case_id: caseId,
+                sub_issue_id: subIssue.id
+
+            }]);
+
+    }
+
+
+    for (const resource of selectedResources) {
+
+        await supabaseClient
+            .from("case_resources")
+            .insert([{
+
+                case_id: caseId,
+                resource_id: resource.id
+
+            }]);
+
+    }
+
+    alert(
+        "Case Saved Successfully"
+    );
+
+    location.reload();
 
 }
 
-alert(
-"Case Saved Successfully"
-);
+function removeResource(id) {
 
-location.reload();
+    selectedResources =
+        selectedResources.filter(
+            x => x.id !== id
+        );
 
-}
-
-function removeResource(id){
-
-selectedResources =
-selectedResources.filter(
-x => x.id !== id
-);
-
-renderResources();
+    renderResources();
 
 }
 
 
-function renderResources(){
+function renderResources() {
 
-const box =
-document.getElementById(
-"selectedResources"
-);
+    const box =
+        document.getElementById(
+            "selectedResources"
+        );
 
-box.innerHTML = "";
+    box.innerHTML = "";
 
-selectedResources.forEach(
-resource => {
+    selectedResources.forEach(
+        resource => {
 
-const chip =
-document.createElement(
-"div"
-);
+            const chip =
+                document.createElement(
+                    "div"
+                );
 
-chip.className =
-"chip";
+            chip.className =
+                "chip";
 
-chip.innerHTML = `
+            chip.innerHTML = `
 
 ${resource.text}
 
@@ -545,211 +567,395 @@ onclick="removeResource(${resource.id})">
 
 `;
 
-box.appendChild(
-chip
-);
+            box.appendChild(
+                chip
+            );
 
-});
+        });
 
 }
 
-async function categoryChanged(){
+async function categoryChanged() {
 
-const categoryId =
+    const categoryId =
+        document.getElementById(
+            "supportCategory"
+        ).value;
+
+    const resourceBox =
+        document.getElementById(
+            "resources"
+        );
+
+    resourceBox.innerHTML =
+        '<option value="">Select Resource</option>';
+
+    if (!categoryId) {
+        return;
+    }
+
+    // mapping table se resource ids lao
+
+    const { data: mappings, error: mapError } =
+        await supabaseClient
+            .from("resource_categories")
+            .select("resource_id")
+            .eq("category_id", categoryId);
+
+    if (mapError) {
+        console.log(mapError);
+        return;
+    }
+
+    if (!mappings.length) {
+        return;
+    }
+
+    const resourceIds =
+        mappings.map(
+            item => item.resource_id
+        );
+
+    // resources table se sirf mapped resources lao
+
+    const { data: resources, error } =
+        await supabaseClient
+            .from("resources")
+            .select("*")
+            .in("id", resourceIds)
+            .order("title");
+
+    if (error) {
+        console.log(error);
+        return;
+    }
+    allResources = resources;
+    resources.forEach(resource => {
+
+        const option =
+            document.createElement(
+                "option"
+            );
+
+        option.value =
+            resource.id;
+
+        option.textContent =
+            resource.title;
+
+        resourceBox.appendChild(
+            option
+        );
+
+    });
+
+}
+
+async function loadIssues() {
+
+    const { data, error } =
+        await supabaseClient
+            .from("issues")
+            .select("*")
+            .order("name");
+
+    if (error) {
+        console.log(error);
+        return;
+    }
+
+    const box =
+        document.getElementById("issues");
+
+    if (!box) {
+        return;
+    }
+
+    box.innerHTML =
+        '<option value="">Select Issue</option>';
+    allIssues = data;
+    data.forEach(issue => {
+
+        const option =
+            document.createElement("option");
+
+        option.value =
+            issue.id;
+
+        option.textContent =
+            issue.name;
+
+        box.appendChild(option);
+
+    });
+
+    const issueSearch =
 document.getElementById(
-"supportCategory"
-).value;
-
-const resourceBox =
-document.getElementById(
-"resources"
+    "issueSearch"
 );
 
-resourceBox.innerHTML =
-'<option value="">Select Resource</option>';
+if(issueSearch){
 
-if(!categoryId){
-return;
-}
-
-const { data, error } =
-await supabaseClient
-.from("resources")
-.select("*")
-.order("title");
-
-if(error){
-
-console.log(error);
-
-return;
+    issueSearch.addEventListener(
+        "input",
+        filterIssues
+    );
 
 }
 
-data.forEach(resource => {
+}
 
-const option =
-document.createElement(
-"option"
-);
+async function issueChanged() {
 
-option.value =
-resource.id;
+    const issueId =
+        document.getElementById("issues").value;
 
-option.textContent =
-resource.title;
+    const subBox =
+        document.getElementById("subIssues");
 
-resourceBox.appendChild(
-option
-);
+    if (!subBox) {
+        return;
+    }
 
-});
+    subBox.innerHTML =
+        '<option value="">Select Sub Issue</option>';
+
+    if (!issueId) {
+        return;
+    }
+
+    const { data, error } =
+        await supabaseClient
+            .from("sub_issues")
+            .select("*")
+            .eq("issue_id", issueId)
+            .order("name");
+
+    if (error) {
+        console.log(error);
+        return;
+    }
+
+    allSubIssues = data;
+
+    data.forEach(sub => {
+
+        const option =
+            document.createElement("option");
+
+        option.value =
+            sub.id;
+
+        option.textContent =
+            sub.name;
+
+        subBox.appendChild(option);
+
+    });
 
 }
 
-async function loadIssues(){
+async function loadCategories() {
 
-const { data, error } =
-await supabaseClient
-.from("issues")
-.select("*")
-.order("name");
+    const { data, error } =
+        await supabaseClient
+            .from("knowledge_categories")
+            .select("*")
+            .order("name");
 
-if(error){
-console.log(error);
-return;
-}
+    if (error) {
+        console.log(error);
+        return;
+    }
 
-const box =
-document.getElementById("issues");
+    const select =
+        document.getElementById(
+            "supportCategory"
+        );
 
-if(!box){
-return;
-}
+    if (!select) {
+        return;
+    }
 
-box.innerHTML =
-'<option value="">Select Issue</option>';
+    select.innerHTML =
+        '<option value="">Select Category</option>';
 
-data.forEach(issue => {
+    data.forEach(cat => {
 
-const option =
-document.createElement("option");
+        const option =
+            document.createElement("option");
 
-option.value =
-issue.id;
+        option.value =
+            cat.id;
 
-option.textContent =
-issue.name;
+        option.textContent =
+            cat.name;
 
-box.appendChild(option);
+        select.appendChild(option);
 
-});
-
-}
-
-async function issueChanged(){
-
-const issueId =
-document.getElementById("issues").value;
-
-const subBox =
-document.getElementById("subIssues");
-
-if(!subBox){
-return;
-}
-
-subBox.innerHTML =
-'<option value="">Select Sub Issue</option>';
-
-if(!issueId){
-return;
-}
-
-const { data, error } =
-await supabaseClient
-.from("sub_issues")
-.select("*")
-.eq("issue_id", issueId)
-.order("name");
-
-if(error){
-console.log(error);
-return;
-}
-
-data.forEach(sub => {
-
-const option =
-document.createElement("option");
-
-option.value =
-sub.id;
-
-option.textContent =
-sub.name;
-
-subBox.appendChild(option);
-
-});
+    });
 
 }
 
-async function loadCategories(){
+async function loadResources() {
 
-const { data, error } =
-await supabaseClient
-.from("knowledge_categories")
-.select("*")
-.order("name");
+    const box =
+        document.getElementById(
+            "resources"
+        );
 
-if(error){
-console.log(error);
-return;
-}
+    if (!box) {
+        return;
+    }
 
-const select =
-document.getElementById(
-"supportCategory"
-);
-
-if(!select){
-return;
-}
-
-select.innerHTML =
-'<option value="">Select Category</option>';
-
-data.forEach(cat => {
-
-const option =
-document.createElement("option");
-
-option.value =
-cat.id;
-
-option.textContent =
-cat.name;
-
-select.appendChild(option);
-
-});
+    box.innerHTML =
+        '<option value="">Select Resource</option>';
 
 }
 
-async function loadResources(){
+function filterIssues() {
 
-const box =
-document.getElementById(
-"resources"
-);
+    const search =
+        document.getElementById(
+            "issueSearch"
+        ).value.toLowerCase().trim();
 
-if(!box){
-return;
+    const box =
+        document.getElementById(
+            "issues"
+        );
+
+    box.innerHTML =
+        '<option value="">Select Issue</option>';
+
+    const filteredIssues =
+        allIssues.filter(issue =>
+            issue.name
+                .toLowerCase()
+                .includes(search)
+        );
+
+    filteredIssues.forEach(issue => {
+
+        const option =
+            document.createElement(
+                "option"
+            );
+
+        option.value =
+            issue.id;
+
+        option.textContent =
+            issue.name;
+
+        box.appendChild(option);
+
+    });
+
+    // agar sirf 1 result mila to automatically select kar do
+
+    if (filteredIssues.length === 1) {
+
+    box.value =
+        filteredIssues[0].id;
+
+    if (typeof issueChanged === "function") {
+        issueChanged();
+    }
+
 }
 
-box.innerHTML =
-'<option value="">Select Resource</option>';
+}
+
+function filterSubIssues() {
+
+    console.log("FILTER RUNNING");
+
+    const search =
+        document.getElementById(
+            "subIssueSearch"
+        ).value.toLowerCase().trim();
+
+    console.log("SEARCH =", search);
+
+    const filtered =
+        allSubIssues.filter(sub =>
+            sub.name
+               .toLowerCase()
+               .includes(search)
+        );
+
+    console.log(filtered);
+
+    const box =
+        document.getElementById(
+            "subIssues"
+        );
+
+    box.innerHTML =
+        '<option value="">Select Sub Issue</option>';
+
+    filtered.forEach(sub => {
+
+        const option =
+            document.createElement("option");
+
+        option.value =
+            sub.id;
+
+        option.textContent =
+            sub.name;
+
+        box.appendChild(option);
+
+    });
 
 }
 
+function filterResources() {
+
+    const search =
+        document.getElementById(
+            "resourceSearch"
+        ).value.toLowerCase().trim();
+
+    const box =
+        document.getElementById(
+            "resources"
+        );
+
+    box.innerHTML =
+        '<option value="">Select Resource</option>';
+
+    const filtered =
+        allResources.filter(resource =>
+            resource.title
+                .toLowerCase()
+                .includes(search)
+        );
+
+    filtered.forEach(resource => {
+
+        const option =
+            document.createElement(
+                "option"
+            );
+
+        option.value =
+            resource.id;
+
+        option.textContent =
+            resource.title;
+
+        box.appendChild(option);
+
+    });
+
+    if(filtered.length === 1){
+
+        box.value =
+            filtered[0].id;
+
+    }
+
+}
