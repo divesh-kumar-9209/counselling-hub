@@ -50,26 +50,19 @@ document.addEventListener(
                 categoryChanged
             );
 
-        document
-            .getElementById("saveBtn")
-            .addEventListener(
+        const saveBtn =
+            document.getElementById(
+                "saveBtn"
+            );
+
+        if (saveBtn) {
+
+            saveBtn.addEventListener(
                 "click",
                 saveCase
             );
 
-        document
-            .getElementById("phrasesBtn")
-            .addEventListener(
-                "click",
-                openPhrases
-            );
-
-        document
-            .getElementById("closePhrases")
-            .addEventListener(
-                "click",
-                closePhrases
-            );
+        }
 
         const phrasesBtn =
             document.getElementById(

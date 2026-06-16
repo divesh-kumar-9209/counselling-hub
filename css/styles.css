@@ -389,27 +389,46 @@ border:1px solid #dbeafe;
 
 }
 
-.phrases-fab {
+.phrases-fab{
 
-    position: fixed;
+    position:fixed;
 
-    bottom: 25px;
-    right: 25px;
+    right:24px;
+    bottom:24px;
 
-    width: 60px;
-    height: 60px;
+    width:58px;
+    height:58px;
 
-    border: none;
-    border-radius: 50%;
+    border:none;
+    border-radius:18px;
 
-    background: #1fbf75;
+    background:#2563eb;
 
-    color: white;
+    color:white;
 
-    font-size: 24px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
 
-    cursor: pointer;
+    cursor:pointer;
 
-    z-index: 10000;
+    box-shadow:
+    0 10px 25px rgba(37,99,235,.35);
+
+    z-index:99999;
+
+    transition:.25s;
+}
+
+.phrases-fab:hover{
+
+    transform:translateY(-3px);
+
+}
+
+.phrases-fab span{
+
+    font-size:24px;
+    line-height:1;
 
 }
