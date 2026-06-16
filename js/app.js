@@ -50,6 +50,29 @@ document.addEventListener(
                 categoryChanged
             );
 
+        const printBtn =
+            document.getElementById(
+                "printBtn"
+            );
+
+        if (printBtn) {
+
+            printBtn.addEventListener(
+                "click",
+                () => {
+
+                    window.print();
+
+                }
+            );
+
+        }
+
+        const session_date =
+            document.getElementById(
+                "sessionDate"
+            ).value;
+
         const saveBtn =
             document.getElementById(
                 "saveBtn"
@@ -404,6 +427,105 @@ function removeResource(id) {
 
 async function saveCase() {
 
+    const saveBtn =
+        document.getElementById(
+            "saveBtn"
+        );
+
+    saveBtn.disabled = true;
+
+    const session_date =
+        document.getElementById("sessionDate").value;
+
+    const support_system =
+        document.getElementById("supportSystem").value;
+
+    const support_who =
+        document.getElementById("supportWho").value;
+
+    const support_shared =
+        document.getElementById("supportShared").value;
+
+    const support_friends =
+        document.getElementById("supportFriends").value;
+
+    const relationship_problem =
+        document.getElementById("relationshipProblem").value;
+
+    const relationship_status =
+        document.getElementById("relationshipStatus").value;
+
+    const relationship_condition =
+        document.getElementById("relationshipCondition").value;
+
+    const relationship_start_date =
+        document.getElementById("relationshipStartDate").value;
+
+    const relationship_end_date =
+        document.getElementById("relationshipEndDate").value;
+
+    const relationship_issues =
+        document.getElementById("relationshipIssues").value;
+
+    const mother_condition =
+        document.getElementById("motherCondition").value;
+
+    const father_condition =
+        document.getElementById("fatherCondition").value;
+
+    const sister_condition =
+        document.getElementById("sisterCondition").value;
+
+    const brother_condition =
+        document.getElementById("brotherCondition").value;
+
+    const wife_condition =
+        document.getElementById("wifeCondition").value;
+
+    const husband_condition =
+        document.getElementById("husbandCondition").value;
+
+    const sleep_issue =
+        document.getElementById("sleepIssues").value;
+
+    const sleep_start_date =
+        document.getElementById("sleepStartDate").value;
+
+    const sleep_medication =
+        document.getElementById("sleepMedication").value;
+
+    const suicidal_ideation =
+        document.getElementById("suicidalIdeation").value;
+
+    const suicidal_start_date =
+        document.getElementById("suicidalStartDate").value;
+
+    const suicidal_thought =
+        document.getElementById("suicidalThought").value;
+
+    const suicidal_attempted =
+        document.getElementById("suicidalAttempted").value;
+
+    const suicidal_managed =
+        document.getElementById("suicidalManaged").value;
+
+    const suicidal_management =
+        document.getElementById("howManaged").value;
+
+    const nssi =
+        document.getElementById("nssi").value;
+
+    const nssi_feel =
+        document.getElementById("nssiFeel").value;
+
+    const coping_mechanism =
+        document.getElementById("copingMechanism").value;
+
+    const coping_feel =
+        document.getElementById("copingFeel").value;
+
+
+
     const client_name =
         document.getElementById(
             "clientName"
@@ -429,10 +551,6 @@ async function saveCase() {
             "issueRemarks"
         ).value;
 
-    const sub_issue_remarks =
-        document.getElementById(
-            "subIssueRemarks"
-        ).value;
 
     const support_remark =
         document.getElementById(
@@ -454,6 +572,11 @@ async function saveCase() {
             "sessionDuration"
         ).value;
 
+    const resource_remarks =
+        document.getElementById(
+            "resourceRemarks"
+        ).value;
+
     const { data: caseRow, error } =
         await supabaseClient
             .from("cases")
@@ -465,14 +588,73 @@ async function saveCase() {
                 occupation,
 
                 issue_remarks,
-                sub_issue_remarks,
+                resource_remarks,
 
                 support_remark,
 
                 counsellor_remarks,
                 case_summary,
 
-                session_duration
+                session_duration,
+                session_date,
+
+                support_system,
+                support_who,
+                support_shared,
+                support_friends,
+
+                relationship_problem,
+                relationship_status,
+                relationship_condition,
+                relationship_start_date,
+                relationship_end_date,
+                relationship_issues,
+
+                mother_condition,
+                father_condition,
+                sister_condition,
+                brother_condition,
+                wife_condition,
+                husband_condition,
+
+                sleep_issue,
+                sleep_start_date,
+                sleep_medication,
+
+                suicidal_ideation,
+                suicidal_start_date,
+                suicidal_thought,
+                suicidal_attempted,
+                suicidal_managed,
+                suicidal_management,
+
+                nssi,
+                nssi_feel,
+
+                coping_mechanism,
+                coping_feel,
+
+                support_remark,
+
+                form_data: {
+
+                    selectedIssues,
+
+                    selectedSubIssues,
+
+                    selectedResources,
+
+                    session_date,
+
+                    support_system,
+
+                    support_who,
+
+                    support_shared,
+
+                    support_friends
+
+                }
 
             }])
             .select()
@@ -494,51 +676,71 @@ async function saveCase() {
         caseRow.id;
 
 
-    for (const issue of selectedIssues) {
+    if (selectedIssues.length) {
 
         await supabaseClient
             .from("case_issues")
-            .insert([{
+            .insert(
 
-                case_id: caseId,
-                issue_id: issue.id
+                selectedIssues.map(
+                    issue => ({
+                        case_id: caseId,
+                        issue_id: issue.id
+                    })
+                )
 
-            }]);
+            );
 
     }
 
-    for (const subIssue of selectedSubIssues) {
+    if (selectedSubIssues.length) {
 
         await supabaseClient
             .from("case_sub_issues")
-            .insert([{
+            .insert(
 
-                case_id: caseId,
-                sub_issue_id: subIssue.id
+                selectedSubIssues.map(
+                    subIssue => ({
+                        case_id: caseId,
+                        sub_issue_id: subIssue.id
+                    })
+                )
 
-            }]);
+            );
 
     }
 
 
-    for (const resource of selectedResources) {
+    if (selectedResources.length) {
 
         await supabaseClient
             .from("case_resources")
-            .insert([{
+            .insert(
 
-                case_id: caseId,
-                resource_id: resource.id
+                selectedResources.map(
+                    resource => ({
+                        case_id: caseId,
+                        resource_id: resource.id
+                    })
+                )
 
-            }]);
+            );
 
     }
 
     alert(
-        "Case Saved Successfully"
+        `Case #${caseId} Saved Successfully`
     );
 
-    location.reload();
+    console.log(
+        "Saved Case ID:",
+        caseId
+    );
+    window.open(
+        `report.html?id=${caseId}`
+    );
+
+    saveBtn.disabled = false;
 
 }
 
