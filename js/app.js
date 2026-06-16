@@ -70,25 +70,51 @@ document.addEventListener(
                 "click",
                 closePhrases
             );
-        
 
-        document
-            .getElementById(
-                "subIssueSearch"
-            )
-            .addEventListener(
-                "input",
-                filterSubIssues
+        const phrasesBtn =
+            document.getElementById(
+                "phrasesBtn"
             );
 
-        document
-            .getElementById(
-                "resourceSearch"
-            )
-            .addEventListener(
-                "input",
-                filterResources
+        const phrasesDrawer =
+            document.getElementById(
+                "phrasesDrawer"
             );
+
+        const closePhrases =
+            document.getElementById(
+                "closePhrases"
+            );
+
+        if (phrasesBtn) {
+
+            phrasesBtn.addEventListener(
+                "click",
+                () => {
+
+                    phrasesDrawer.classList.add(
+                        "open"
+                    );
+
+                }
+            );
+
+        }
+
+        if (closePhrases) {
+
+            closePhrases.addEventListener(
+                "click",
+                () => {
+
+                    phrasesDrawer.classList.remove(
+                        "open"
+                    );
+
+                }
+            );
+
+        }
 
     });
 
@@ -689,20 +715,6 @@ async function loadIssues() {
 
     });
 
-    const issueSearch =
-document.getElementById(
-    "issueSearch"
-);
-
-if(issueSearch){
-
-    issueSearch.addEventListener(
-        "input",
-        filterIssues
-    );
-
-}
-
 }
 
 async function issueChanged() {
@@ -813,149 +825,7 @@ async function loadResources() {
 
 }
 
-function filterIssues() {
 
-    const search =
-        document.getElementById(
-            "issueSearch"
-        ).value.toLowerCase().trim();
 
-    const box =
-        document.getElementById(
-            "issues"
-        );
 
-    box.innerHTML =
-        '<option value="">Select Issue</option>';
 
-    const filteredIssues =
-        allIssues.filter(issue =>
-            issue.name
-                .toLowerCase()
-                .includes(search)
-        );
-
-    filteredIssues.forEach(issue => {
-
-        const option =
-            document.createElement(
-                "option"
-            );
-
-        option.value =
-            issue.id;
-
-        option.textContent =
-            issue.name;
-
-        box.appendChild(option);
-
-    });
-
-    // agar sirf 1 result mila to automatically select kar do
-
-    if (filteredIssues.length === 1) {
-
-    box.value =
-        filteredIssues[0].id;
-
-    if (typeof issueChanged === "function") {
-        issueChanged();
-    }
-
-}
-
-}
-
-function filterSubIssues() {
-
-    console.log("FILTER RUNNING");
-
-    const search =
-        document.getElementById(
-            "subIssueSearch"
-        ).value.toLowerCase().trim();
-
-    console.log("SEARCH =", search);
-
-    const filtered =
-        allSubIssues.filter(sub =>
-            sub.name
-               .toLowerCase()
-               .includes(search)
-        );
-
-    console.log(filtered);
-
-    const box =
-        document.getElementById(
-            "subIssues"
-        );
-
-    box.innerHTML =
-        '<option value="">Select Sub Issue</option>';
-
-    filtered.forEach(sub => {
-
-        const option =
-            document.createElement("option");
-
-        option.value =
-            sub.id;
-
-        option.textContent =
-            sub.name;
-
-        box.appendChild(option);
-
-    });
-
-}
-
-function filterResources() {
-
-    const search =
-        document.getElementById(
-            "resourceSearch"
-        ).value.toLowerCase().trim();
-
-    const box =
-        document.getElementById(
-            "resources"
-        );
-
-    box.innerHTML =
-        '<option value="">Select Resource</option>';
-
-    const filtered =
-        allResources.filter(resource =>
-            resource.title
-                .toLowerCase()
-                .includes(search)
-        );
-
-    filtered.forEach(resource => {
-
-        const option =
-            document.createElement(
-                "option"
-            );
-
-        option.value =
-            resource.id;
-
-        option.textContent =
-            resource.title;
-
-        box.appendChild(option);
-
-    });
-
-    if(filtered.length === 1){
-
-        box.value =
-            filtered[0].id;
-
-    }
-
-}
